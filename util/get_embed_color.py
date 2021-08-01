@@ -11,6 +11,6 @@ def get_embed_color(user_id, hex_code=False):
             return data[str(user_id)]
     else:
         if not hex_code:
-            return 0  # black color
+            return 0xffffff  # white color
         else:
-            return '#000000'
+            return '#FFFFFF'
