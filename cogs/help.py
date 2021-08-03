@@ -1,12 +1,9 @@
 import discord
-import json
-import os
 from discord.ext import commands
 
 from util.get_embed_color import get_embed_color
 from util.get_number_of_questions import get_number_of_questions
 from util.get_server_prefix import get_server_prefix
-from util.send_embed import send_embed
 
 
 class Help(commands.Cog):
@@ -41,20 +38,21 @@ class Help(commands.Cog):
         else:
             for cog in self.bot.cogs:
                 if command.lower() == cog.lower():
-                    info = [x.strip() for x in self.bot.cogs[cog].__doc__.split('\n')][1:]
+                    full_desc = '\n'.join([x.strip() for x in (self.bot.cogs[cog].__doc__.split('Usage:')[0].strip().split('\n'))])
+                    usage = '\n'.join([x.strip() for x in (self.bot.cogs[cog].__doc__.strip().split('Usage:')[1].strip().split('\n'))])
+                    aliases = ', '.join([f'`{x}`' for x in self.bot.get_command(cog.lower()).aliases])
                     emb = discord.Embed(
                         title=f'{cog} - Command',
-                        description=info[0],
+                        description=full_desc,
                         colour=get_embed_color(ctx.author.id)
                     )
-                    emb.add_field(name='Usage', value='\n'.join(info[2:]), inline=False)
-                    emb.add_field(name='Aliases', value=', '.join(
-                        [f'`{x}`' for x in self.bot.get_command(cog.lower()).aliases]), inline=False)
+                    emb.add_field(name='Usage', value=usage, inline=False)
+                    emb.add_field(name='Aliases', value=aliases if aliases else 'None', inline=False)
                     break
             else:
                 emb = discord.Embed(
                     title='Command not found',
-                    description=f'I don\'t have a command named {command}.',
+                    description=f'No command named `{command}`.',
                     colour=get_embed_color(ctx.author.id)
                 )
         await ctx.send(embed=emb)

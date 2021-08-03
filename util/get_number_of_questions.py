@@ -18,9 +18,12 @@ async def get_number_of_questions(guild_id=None, category=None):
         count = await get_category_questions(guild_id, 'dare')
     elif category == 'wyr':
         count = await get_category_questions(guild_id, 'wyr')
+    elif category == 'paranoia' or category == 'p':
+        count = await get_category_questions(guild_id, 'paranoia')
     else:
         count = 0
         count += await get_category_questions(guild_id, 'truth')
         count += await get_category_questions(guild_id, 'dare')
         count += await get_category_questions(guild_id, 'wyr')
+        count += await get_category_questions(guild_id, 'paranoia')
     return count

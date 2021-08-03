@@ -1,7 +1,6 @@
 import json
 
 import discord
-from random import choice
 from discord.ext import commands
 
 from util.get_server_prefix import get_server_prefix
@@ -12,8 +11,7 @@ class Add(commands.Cog):
     '''
     Add a custom question in your server.
     Usage:
-    `<prefix> add <truth | dare | wyr> <pg | pg13 | r> <question>`
-    `<prefix> add wyr <pg | pg13 | r> <choice1>, <choice2>, ...` (2-5 choices)
+    `<prefix> add <truth | dare | wyr | paranoia> <pg | pg13 | r> <question>`
     '''
     def __init__(self, bot):
         self.bot = bot
@@ -26,13 +24,6 @@ class Add(commands.Cog):
         question_type = question_type.lower()
         category = category.lower()
         async with ctx.typing():
-            if not category:
-                default_category = json.load(open('data\\default_category.json', 'r'))
-                if str(ctx.guild.id) in default_category:
-                    category = default_category[str(ctx.guild.id)]
-                else:
-                    category = 'pg'
-
             if question_type in ['truth', 't', 'truths']:
                 location = 'data\\questions\\truths.json'
                 data = json.load(open(location, 'r'))
@@ -48,11 +39,16 @@ class Add(commands.Cog):
                 data = json.load(open(location, 'r'))
                 question_type = 'wyr'
                 question = question.lower().capitalize().replace(' u ', ' you ')
+            elif question_type in ['p', 'paranoia']:
+                location = 'data\\questions\\paranoias.json'
+                data = json.load(open(location, 'r'))
+                question_type = 'paranoia'
+                question = question.lower().capitalize().replace(' u ', ' you ')
 
             if category in ['pg', 'pg13', 'r']:
                 #if str(ctx.guild.id) in data:
                 if question in data[category]:
-                    await send_embed(ctx, 'dupe', 'dupe')
+                    await send_embed(ctx, 'Duplicate question', 'This question is already inside the list of questions.')
                     return
                 data[category].append(question)
                 data[category] = list(set(data[category]))
@@ -62,7 +58,7 @@ class Add(commands.Cog):
                     #data[str(ctx.guild.id)][category].append(question)
             else:
                 await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}add '
-                                                          f'<truth | dare | wyr> <pg | pg13 | r> <question>')
+                                                          f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>')
                 return
 
         json_data = json.dumps(data)
@@ -76,7 +72,7 @@ class Add(commands.Cog):
     async def add_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
             await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}add '
-                                                   f'<truth | dare | wyr> <pg | pg13 | r> <question>')
+                                                   f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>')
         else:
             raise error
 
