@@ -3,8 +3,8 @@ import re
 
 from discord.ext import commands
 
-from util.get_server_prefix import get_server_prefix
-from util.send_embed import send_embed
+from utils.get_server_prefix import get_server_prefix
+from utils.send_embed import send_embed
 
 
 class Prefix(commands.Cog):
@@ -13,6 +13,7 @@ class Prefix(commands.Cog):
     Usage:
     `<prefix> prefix <new prefix>`
     '''
+
     def __init__(self, bot):
         self.bot = bot
 

@@ -4,10 +4,10 @@ import random
 import discord
 from discord.ext import commands
 
-from util.choose_random_member import choose_random_member
-from util.get_millis_time import get_millis_time
-from util.get_server_prefix import get_server_prefix
-from util.send_embed import send_embed
+from utils.choose_random_member import choose_random_member
+from utils.get_millis_time import get_millis_time
+from utils.get_server_prefix import get_server_prefix
+from utils.send_embed import send_embed
 
 
 class Paranoia(commands.Cog):
@@ -61,10 +61,13 @@ class Paranoia(commands.Cog):
             embed.set_footer(text=f'Reply to this message with your answer in this dm')
             dm_msg = await member.send(embed=embed)
 
-            response = await self.bot.wait_for('message', timeout=None, check=lambda msg: msg.author == member and isinstance(msg.channel, discord.DMChannel))
+            response = await self.bot.wait_for('message',
+                                               check=lambda msg: msg.author == member and isinstance(msg.channel,
+                                                                                                     discord.DMChannel))
             while not (response.reference and response.reference.message_id == dm_msg.id):
-                response = await self.bot.wait_for('message', timeout=None,
-                                                   check=lambda msg: msg.author == member and isinstance(msg.channel, discord.DMChannel))
+                response = await self.bot.wait_for('message',
+                                                   check=lambda msg: msg.author == member and isinstance(msg.channel,
+                                                                                                         discord.DMChannel))
 
             if response.reference.message_id == dm_msg.id:
                 await response.add_reaction('<:check:867760636980756500>')
@@ -74,7 +77,7 @@ class Paranoia(commands.Cog):
                     reveal_embed.add_field(name='Coin landed on heads', value=question_chosen)
                     await dm_msg.edit(embed=embed.set_footer(text='Question revealed :)'))
                 else:
-                    reveal_embed.add_field(name='Coin landed on tails', value=f':(')
+                    reveal_embed.add_field(name='Coin landed on tails', value=':(')
                     await dm_msg.edit(embed=embed.set_footer(text='Question kept secret :('))
                 await ctx.message.reply(embed=reveal_embed)
 

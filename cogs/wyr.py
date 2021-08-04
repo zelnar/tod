@@ -1,14 +1,13 @@
 import json
 import random
-
-import discord
 from random import choice
+
 from discord.ext import commands
 
-from util.choose_random_member import choose_random_member
-from util.get_millis_time import get_millis_time
-from util.get_server_prefix import get_server_prefix
-from util.send_embed import send_embed
+from utils.choose_random_member import choose_random_member
+from utils.get_millis_time import get_millis_time
+from utils.get_server_prefix import get_server_prefix
+from utils.send_embed import send_embed
 
 
 class Wyr(commands.Cog):
@@ -17,6 +16,7 @@ class Wyr(commands.Cog):
     Usage:
     `<prefix> wyr [pg | pg13 | r]` (If category not specified, I choose a pg question.)
     '''
+
     def __init__(self, bot):
         self.bot = bot
 

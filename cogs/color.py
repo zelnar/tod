@@ -1,10 +1,10 @@
-import discord
 import json
-from discord.ext import commands
 import re
 
-from util.get_embed_color import get_embed_color
-from util.send_embed import send_embed
+from discord.ext import commands
+
+from utils.get_embed_color import get_embed_color
+from utils.send_embed import send_embed
 
 
 class Color(commands.Cog):
@@ -13,6 +13,7 @@ class Color(commands.Cog):
     Usage:
     `<prefix> color <hex code>` (Ex: #000 or ABF or 194B91)
     '''
+
     def __init__(self, bot):
         self.bot = bot
 

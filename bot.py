@@ -1,16 +1,13 @@
 import os
 
-# sql database add new row every question
-# bot 24/7 hosting
 import discord
 from discord.ext import commands
 
 from data.default_prefix import PREFIX
-from util.get_server_prefix import get_server_prefix, get_server_prefix_list
-from util.send_embed import send_embed
+from utils.get_server_prefix import get_server_prefix, get_server_prefix_list
+from utils.send_embed import send_embed
 
-intents = discord.Intents.default()
-intents.members = True
+intents = discord.Intents.all()
 TOKEN = "ODY5MDQ2NjEwNzA4MDEzMDg5.YP4gug.NOi7IJD7aDYZXXJt6K-CFwKSKfg"
 bot = commands.Bot(command_prefix=get_server_prefix_list, case_insensitive=True, intents=intents)
 bot.remove_command('help')

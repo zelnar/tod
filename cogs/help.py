@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
 
-from util.get_embed_color import get_embed_color
-from util.get_number_of_questions import get_number_of_questions
-from util.get_server_prefix import get_server_prefix
+from utils.get_embed_color import get_embed_color
+from utils.get_number_of_questions import get_number_of_questions
+from utils.get_server_prefix import get_server_prefix
 
 
 class Help(commands.Cog):
@@ -12,6 +12,7 @@ class Help(commands.Cog):
     Usage:
     `<prefix> help`
     '''
+
     def __init__(self, bot):
         self.bot = bot
 

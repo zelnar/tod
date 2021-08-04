@@ -1,11 +1,11 @@
-import discord
 import json
 import time
 
+import discord
 from discord.ext import commands
 
-from util.get_server_prefix import get_server_prefix
-from util.send_embed import send_embed
+from utils.get_server_prefix import get_server_prefix
+from utils.send_embed import send_embed
 
 
 class Suggestion(commands.Cog):
@@ -14,6 +14,7 @@ class Suggestion(commands.Cog):
     Usage:
     `<prefix> suggestion <suggestion>`
     '''
+
     def __init__(self, bot):
         self.bot = bot
 
