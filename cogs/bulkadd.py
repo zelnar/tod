@@ -11,7 +11,7 @@ class Bulkadd(commands.Cog):
     '''
     Add multiple custom questions in your server.
     Usage:
-    `<prefix> add <truth | dare | wyr | paranoia> <pg | pg13 | r> <question>`
+    `<prefix> add <truth | dare | wyr | paranoia> <pg | pg13 | r> <questions>` (separated by new lines)
     '''
 
     def __init__(self, bot):
@@ -47,10 +47,10 @@ class Bulkadd(commands.Cog):
                 dupes = 0
                 #if str(ctx.guild.id) in data:
                 for question in questions:
-                    if question in data[category]:
+                    if question.strip() in data[category]:
                         dupes += 1
                     else:
-                        data[category].append(question)
+                        data[category].append(question.strip())
                 data[category] = list(set(data[category]))
             else:
                 await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}bulkadd '

@@ -45,8 +45,8 @@ class Truth(commands.Cog):
 
         if category == 'add':
             await send_embed(ctx, f'Wrong command?', f'Did you mean to use the add command?'
-                                                     f'\n({await get_server_prefix(self.bot, ctx)}add '
-                                                     f'<truth | dare | wyr> <pg | pg13 | r> <question>)')
+                                                     f'\n(`{await get_server_prefix(self.bot, ctx)}add '
+                                                     f'<truth | dare | wyr> <pg | pg13 | r> <question>`)')
             return
 
         random.seed(get_millis_time())

@@ -35,7 +35,7 @@ class Help(commands.Cog):
             for cog in self.bot.cogs:
                 emb.add_field(name=cog, value=self.bot.cogs[cog].__doc__.split('\n')[1].strip())
 
-            emb.set_footer(text=f'Bot is running version {version}')
+            emb.set_footer(text=f'{len(self.bot.cogs)} commands • Bot is running version {version}')
         else:
             for cog in self.bot.cogs:
                 if command.lower() == cog.lower():

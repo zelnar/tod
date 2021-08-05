@@ -22,6 +22,11 @@ class Add(commands.Cog):
     async def add(self, ctx, question_type, category, *, question):
         if ctx.author.id != 461345173314732052:
             return
+        if '\n' in question.strip():
+            await send_embed(ctx, f'Wrong command?', f'Did you mean to use the bulkadd command?'
+                                                     f'\n(`{await get_server_prefix(self.bot, ctx)}bulkadd '
+                                                     f'<truth | dare | wyr> <pg | pg13 | r> <questions>` (separated by new lines))')
+            return
         question_type = question_type.lower()
         category = category.lower()
         async with ctx.typing():
@@ -51,7 +56,7 @@ class Add(commands.Cog):
                 if question in data[category]:
                     await send_embed(ctx, 'Duplicate question', 'This question is already inside the list of questions.')
                     return
-                data[category].append(question)
+                data[category].append(question.strip())
                 data[category] = list(set(data[category]))
                     #data[str(ctx.guild.id)][category].append(question)
                 #else:
