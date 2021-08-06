@@ -18,8 +18,10 @@ class Info(commands.Cog):
     async def info(self, ctx, *, content=None):
         await send_embed(ctx, 'Info', f'**Ping:** {round(self.bot.latency * 1000, 2)}ms\n'
                                       f'**Invite Link (admin):** [here]('
-                                      f'https://discord.com/api/oauth2/authorize?client_id=869046610708013089'
-                                      f'&permissions=8&scope=bot%20applications.commands)\n '
+                                      f'https://discord.com/api/oauth2/authorize?'
+                                      f'client_id=869046610708013089'
+                                      f'&permissions=8&scope=bot%20applications.commands)\n'
+                                      f'**Owner:** blabla#9999'
                          )
 
 def setup(bot):

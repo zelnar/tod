@@ -29,7 +29,8 @@ async def on_guild_join(guild):
             )
             embed.add_field(name='**My Links**',
                             value='[Invite]('
-                                  'https://discord.com/api/oauth2/authorize?client_id=869046610708013089&permissions=8&scope=bot'
+                                  'https://discord.com/api/oauth2/authorize?'
+                                  'client_id=869046610708013089&permissions=8&scope=bot%20applications.commands'
                                   ') - Add this bot to one of your servers and have some fun!',inline=False)
             await channel.send(embed=embed)
         break

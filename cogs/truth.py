@@ -34,7 +34,7 @@ class Truth(commands.Cog):
                 if str(ctx.guild.id) in default_category:
                     category = default_category[str(ctx.guild.id)]
                 else:
-                    category = random.choice(['pg', 'pg13'])
+                    category = random.choice(['pg'])
             category = category.lower()
 
             data2 = json.load(open('data\\questions\\servertruths.json', 'r'))
