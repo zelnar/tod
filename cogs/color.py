@@ -31,7 +31,7 @@ class Color(commands.Cog):
                     if color[0] != '#':
                         color = '#' + color
                     if len(color) == 4:
-                        color = '#' + ''.join(map(lambda x: x+x, list(color[1:])))
+                        color = '#' + ''.join(map(lambda x: x + x, list(color[1:])))
                     data[str(ctx.message.author.id)] = color
                     json_data = json.dumps(data)
                     f = open('data\\colors.json', 'w')
@@ -46,6 +46,7 @@ class Color(commands.Cog):
     @color.error
     async def color_error(self, ctx, error):
         await send_embed(ctx, 'Invalid color', 'Enter a valid hex value (ex: #FFF or #121B24)')
+
 
 def setup(bot):
     bot.add_cog(Color(bot))

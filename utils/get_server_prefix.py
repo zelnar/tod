@@ -13,6 +13,7 @@ async def mixed_case(*args):
         for x in list(a): total.append(x)
     return list(total)
 
+
 async def get_server_prefix(bot, message) -> str:
     data = json.load(open('data\\prefixes.json', 'r'))
     if str(message.guild.id) in data:

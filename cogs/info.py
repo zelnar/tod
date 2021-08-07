@@ -24,5 +24,6 @@ class Info(commands.Cog):
                                       f'**Owner:** blabla#9999'
                          )
 
+
 def setup(bot):
     bot.add_cog(Info(bot))

@@ -18,6 +18,7 @@ class Paranoia(commands.Cog):
     Usage:
     `<prefix> paranoia <member> <pg | pg13 | r>` (If category not specified, I choose a pg or pg13 question.)
     '''
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -27,7 +28,7 @@ class Paranoia(commands.Cog):
 
     @commands.command(aliases=['p'])
     @commands.guild_only()
-    async def paranoia(self, ctx, member:discord.Member, *, category=None):
+    async def paranoia(self, ctx, member: discord.Member, *, category=None):
         async with ctx.typing():
             data = json.load(open('data\\questions\\paranoias.json', 'r'))
             if not category:
@@ -81,15 +82,15 @@ class Paranoia(commands.Cog):
                     await dm_msg.edit(embed=embed.set_footer(text='Question kept secret :('))
                 await ctx.message.reply(embed=reveal_embed)
 
-
     @paranoia.error
     async def paranoia_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
             await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}paranoia '
-                                                            f'<member> <pg | pg13 | r>')
+                                                   f'<member> <pg | pg13 | r>')
         else:
             await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}paranoia '
                                                    f'<member> <pg | pg13 | r>')
+
 
 def setup(bot):
     bot.add_cog(Paranoia(bot))

@@ -59,7 +59,8 @@ class Dare(commands.Cog):
     @dare.error
     async def dare_error(self, ctx, error):
         await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}dare '
-                                               f'[pg | pg13 | r]')
+                                                  f'[pg | pg13 | r]')
+
 
 def setup(bot):
     bot.add_cog(Dare(bot))

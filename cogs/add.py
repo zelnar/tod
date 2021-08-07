@@ -52,16 +52,17 @@ class Add(commands.Cog):
                 question = question.lower().capitalize().replace(' u ', ' you ')
 
             if category in ['pg', 'pg13', 'r']:
-                #if str(ctx.guild.id) in data:
+                # if str(ctx.guild.id) in data:
                 if question in data[category]:
-                    await send_embed(ctx, 'Duplicate question', 'This question is already inside the list of questions.')
+                    await send_embed(ctx, 'Duplicate question',
+                                     'This question is already inside the list of questions.')
                     return
                 data[category].append(question.strip())
                 data[category] = list(set(data[category]))
-                    #data[str(ctx.guild.id)][category].append(question)
-                #else:
-                    #data[str(ctx.guild.id)] = {'pg': [], 'pg13': [], 'r': []}
-                    #data[str(ctx.guild.id)][category].append(question)
+                # data[str(ctx.guild.id)][category].append(question)
+                # else:
+                # data[str(ctx.guild.id)] = {'pg': [], 'pg13': [], 'r': []}
+                # data[str(ctx.guild.id)][category].append(question)
             else:
                 await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}add '
                                                           f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>')
@@ -73,7 +74,6 @@ class Add(commands.Cog):
         f.close()
         await send_embed(ctx, f'Added a {question_type} question (Category: {category})', question)
 
-
     @add.error
     async def add_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
@@ -81,6 +81,7 @@ class Add(commands.Cog):
                                                    f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>')
         else:
             raise error
+
 
 def setup(bot):
     bot.add_cog(Add(bot))

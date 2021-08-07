@@ -21,7 +21,6 @@ class Help(commands.Cog):
     async def help(self, ctx, *, command=None):
         prefix = await get_server_prefix(self.bot, ctx)
         version = '1.0'
-        owner = 'blabla#9999'
         if not command:
             questions = await get_number_of_questions(ctx.guild.id)
             custom_questions = questions - await get_number_of_questions()
@@ -39,8 +38,10 @@ class Help(commands.Cog):
         else:
             for cog in self.bot.cogs:
                 if command.lower() == cog.lower():
-                    full_desc = '\n'.join([x.strip() for x in (self.bot.cogs[cog].__doc__.split('Usage:')[0].strip().split('\n'))])
-                    usage = '\n'.join([x.strip() for x in (self.bot.cogs[cog].__doc__.strip().split('Usage:')[1].strip().split('\n'))])
+                    full_desc = '\n'.join(
+                        [x.strip() for x in (self.bot.cogs[cog].__doc__.split('Usage:')[0].strip().split('\n'))])
+                    usage = '\n'.join([x.strip() for x in
+                                       (self.bot.cogs[cog].__doc__.strip().split('Usage:')[1].strip().split('\n'))])
                     aliases = ', '.join([f'`{x}`' for x in self.bot.get_command(cog.lower()).aliases])
                     emb = discord.Embed(
                         title=f'{cog} - Command',

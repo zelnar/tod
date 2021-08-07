@@ -61,5 +61,6 @@ class Wyr(commands.Cog):
         await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}wyr '
                                                   f'[pg | pg13 | r]')
 
+
 def setup(bot):
     bot.add_cog(Wyr(bot))

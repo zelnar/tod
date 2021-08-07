@@ -45,7 +45,7 @@ class Bulkadd(commands.Cog):
 
             if category in ['pg', 'pg13', 'r']:
                 dupes = 0
-                #if str(ctx.guild.id) in data:
+                # if str(ctx.guild.id) in data:
                 for question in questions:
                     if question.strip() in data[category]:
                         dupes += 1
@@ -62,10 +62,9 @@ class Bulkadd(commands.Cog):
         f = open(location, 'w')
         f.write(json_data)
         f.close()
-        await send_embed(ctx, f'Added {len(questions)-dupes} {question_type} questions (Category: {category})',
-                         f'{len(questions)-dupes} questions ({dupes} duplicates)'
+        await send_embed(ctx, f'Added {len(questions) - dupes} {question_type} questions (Category: {category})',
+                         f'{len(questions) - dupes} questions ({dupes} duplicates)'
                          f' were added to the list of {question_type} questions.')
-
 
     @bulkadd.error
     async def bulkadd_error(self, ctx, error):
@@ -75,6 +74,7 @@ class Bulkadd(commands.Cog):
                                                    f'\n(where each question is on a new line)')
         else:
             raise error
+
 
 def setup(bot):
     bot.add_cog(Bulkadd(bot))

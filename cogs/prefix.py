@@ -37,12 +37,14 @@ class Prefix(commands.Cog):
             f = open('data\\prefixes.json', 'w')
             f.write(json_data)
             f.close()
-            await send_embed(ctx, 'Server prefix set', f'I set my prefix to `{new_prefix}`! (Old prefix: `{old_prefix}`)')
+            await send_embed(ctx, 'Server prefix set',
+                             f'I set my prefix to `{new_prefix}`! (Old prefix: `{old_prefix}`)')
 
     @prefix.error
     async def prefix_error(self, ctx, error):
         await send_embed(ctx, 'Could not set prefix', 'Surround your new prefix in double quotes.'
                                                       f' (ex: {await get_server_prefix(self.bot, ctx)}prefix "td")')
+
 
 def setup(bot):
     bot.add_cog(Prefix(bot))

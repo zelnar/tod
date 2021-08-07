@@ -1,5 +1,6 @@
 import json
 
+
 async def get_category_questions(guild_id, category):
     count = 0
     data = json.load(open(f'data\\questions\\{category}s.json', 'r'))
@@ -10,6 +11,7 @@ async def get_category_questions(guild_id, category):
         for c in data[guild_id]:
             count += len(data[guild_id][c])
     return count
+
 
 async def get_number_of_questions(guild_id=None, category=None):
     if category == 'truth' or category == 't':

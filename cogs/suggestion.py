@@ -36,10 +36,11 @@ class Suggestion(commands.Cog):
     async def suggest_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
             await send_embed(ctx, 'Provide a suggestion', 'You need to suggest *something*.\n'
-                                                         f'Use `{await get_server_prefix(self.bot, ctx)}suggest <suggestion>`'
+                                                          f'Use `{await get_server_prefix(self.bot, ctx)}suggest <suggestion>`'
                                                           f' to suggest a command or feature.')
         else:
             raise error
+
 
 def setup(bot):
     bot.add_cog(Suggestion(bot))
