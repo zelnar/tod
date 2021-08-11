@@ -63,7 +63,7 @@ class Bulkadd(commands.Cog):
         f.write(json_data)
         f.close()
         await send_embed(ctx, f'Added {len(questions) - dupes} {question_type} questions (Category: {category})',
-                         f'{len(questions) - dupes} questions ({dupes} duplicates)'
+                         f'{len(questions) - dupes} questions (excluding {dupes} duplicates)'
                          f' were added to the list of {question_type} questions.')
 
     @bulkadd.error

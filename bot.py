@@ -48,7 +48,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if f'<@!{bot.user.id}>' in message.content:
-        await send_embed(message, 'Hey! I\'m TruthOrDare.', f'Run `{await get_server_prefix(message, message.guild.id)}'
+        await send_embed(message, 'Hey! I\'m TruthOrDare.', f'Run `{await get_server_prefix(bot, message)}'
                                                             f'help` to see my commands.', bot.user.avatar_url)
     await bot.process_commands(message)
 

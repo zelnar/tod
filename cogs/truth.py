@@ -1,11 +1,9 @@
 import json
-import random
-from random import choice
 
 from discord.ext import commands
+from numpy.random import choice
 
 from utils.choose_random_member import choose_random_member
-from utils.get_millis_time import get_millis_time
 from utils.get_server_prefix import get_server_prefix
 from utils.send_embed import send_embed
 
@@ -34,7 +32,7 @@ class Truth(commands.Cog):
                 if str(ctx.guild.id) in default_category:
                     category = default_category[str(ctx.guild.id)]
                 else:
-                    category = random.choice(['pg'])
+                    category = 'pg'
             category = category.lower()
 
             data2 = json.load(open('data\\questions\\servertruths.json', 'r'))
@@ -48,8 +46,6 @@ class Truth(commands.Cog):
                                                      f'\n(`{await get_server_prefix(self.bot, ctx)}add '
                                                      f'<truth | dare | wyr> <pg | pg13 | r> <question>`)')
             return
-
-        random.seed(get_millis_time())
 
         question_chosen = choice(await self.list_extend(questions, data[category]))
         question_chosen = question_chosen.replace('[random user]', f'{choose_random_member(ctx)}')

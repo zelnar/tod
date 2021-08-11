@@ -11,6 +11,6 @@ async def send_embed(ctx, title, description, avatar_url=None, send=True):
         color=get_embed_color(ctx.author.id)
     ).set_author(name=title, icon_url=avatar_url)
     if send:
-        return await ctx.send(embed=embed)
+        return await ctx.channel.send(embed=embed)
     else:
         return embed
