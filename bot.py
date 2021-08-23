@@ -38,6 +38,11 @@ async def on_guild_join(guild):
 
 
 @bot.event
+async def on_message_delete(message):
+    print(message.author, message.content)
+
+
+@bot.event
 async def on_ready():
     count = 0
     for guild in bot.guilds:

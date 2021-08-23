@@ -37,7 +37,7 @@ class Help(commands.Cog):
             emb.set_footer(text=f'{len(self.bot.cogs)} commands • Bot is running version {version}')
         else:
             for cog in self.bot.cogs:
-                if command.lower() == cog.lower():
+                if command.lower() == cog.lower() or command in self.bot.get_command(cog.lower()).aliases:
                     full_desc = '\n'.join(
                         [x.strip() for x in (self.bot.cogs[cog].__doc__.split('Usage:')[0].strip().split('\n'))])
                     usage = '\n'.join([x.strip() for x in
