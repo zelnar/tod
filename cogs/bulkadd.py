@@ -50,7 +50,7 @@ class Bulkadd(commands.Cog):
                     if question.strip() in data[category]:
                         dupes += 1
                     else:
-                        data[category].append(question.strip().lower().capitalize())
+                        data[category].append(question.strip().capitalize())
                 data[category] = list(set(data[category]))
             else:
                 await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}bulkadd '

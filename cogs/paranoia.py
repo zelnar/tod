@@ -3,9 +3,9 @@ import random
 
 import discord
 from discord.ext import commands
+from numpy.random import choice
 
 from utils.choose_random_member import choose_random_member
-from utils.get_millis_time import get_millis_time
 from utils.get_server_prefix import get_server_prefix
 from utils.send_embed import send_embed
 
@@ -51,9 +51,7 @@ class Paranoia(commands.Cog):
                                                      f'<truth | dare | wyr> <pg | pg13 | r> <question>)')
             return
 
-        random.seed(get_millis_time())
-
-        question_chosen = random.choice(await self.list_extend(questions, data[category]))
+        question_chosen = choice(await self.list_extend(questions, data[category]))
         question_chosen = question_chosen.replace('[random user]', f'{choose_random_member(ctx)}')
         if category in ['pg', 'pg13', 'r']:
             await ctx.message.add_reaction('<:check:867760636980756500>')
@@ -77,13 +75,22 @@ class Paranoia(commands.Cog):
                 if random.randint(1, 100) >= 49:
                     reveal_embed.add_field(name='Coin landed on heads', value=question_chosen)
                     await dm_msg.edit(embed=embed.set_footer(text='Question revealed :)'))
+                    await ctx.message.reply(embed=reveal_embed)
                 else:
                     reveal_embed.add_field(name='Coin landed on tails', value=':(')
                     await dm_msg.edit(embed=embed.set_footer(text='Question kept secret :('))
-                await ctx.message.reply(embed=reveal_embed)
+                    msg = await ctx.message.reply(embed=reveal_embed)
+
+                    data = json.load(open('data\\active_paranoia_questions.json', 'r'))
+                    data[str(ctx.author.id)].append([str(member.id), question_chosen, response.content, msg.jump_url])
+                    json_data = json.dumps(data)
+                    f = open('data\\active_paranoia_questions.json', 'w')
+                    f.write(json_data)
+                    f.close()
 
     @paranoia.error
     async def paranoia_error(self, ctx, error):
+        raise error
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
             await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}paranoia '
                                                    f'<member> <pg | pg13 | r>')

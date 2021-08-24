@@ -228,7 +228,7 @@ color_mapping = {'random': 'random', 'abbey': '#4c4f56', 'acadia': '#1b1404', 'a
                  'midnight blue': '#003366', 'midnight moss': '#041004', 'mikado': '#2d2510', 'milan': '#faffa4',
                  'milano red': '#b81104', 'milk punch': '#fff6d4', 'millbrook': '#594433', 'mimosa': '#f8fdd3',
                  'mindaro': '#e3f988', 'mine shaft': '#323232', 'mineral green': '#3f5d53', 'ming': '#36747d',
-                 'minsk': '#3f307f', 'mint': '#98ff98', 'mint green': '#98ff98', 'mint julep': '#f1eec1',
+                 'minsk': '#3f307f', 'mint': '#8ae3a8', 'mint green': '#a2e4b8', 'mint julep': '#f1eec1',
                  'mint tulip': '#c4f4eb', 'mirage': '#161928', 'mischka': '#d1d2dd', 'mist gray': '#c4c4bc',
                  'mobster': '#7f7589',
                  'moccaccino': '#6e1d14', 'mocha': '#782d19', 'mojo': '#c04737', 'mona lisa': '#ffa194',

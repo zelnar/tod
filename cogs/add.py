@@ -34,22 +34,22 @@ class Add(commands.Cog):
                 location = 'data\\questions\\truths.json'
                 data = json.load(open(location, 'r'))
                 question_type = 'truth'
-                question = question.lower().capitalize().replace(' u ', ' you ')
+                question = question.capitalize().replace(' u ', ' you ')
             elif question_type in ['dare', 'd', 'dares']:
                 location = 'data\\questions\\dares.json'
                 data = json.load(open(location, 'r'))
                 question_type = 'dare'
-                question = question.lower().capitalize().replace(' u ', ' you ')
+                question = question.capitalize().replace(' u ', ' you ')
             elif question_type in ['wyr', 'wouldyourather']:
                 location = 'data\\questions\\wyrs.json'
                 data = json.load(open(location, 'r'))
                 question_type = 'wyr'
-                question = question.lower().capitalize().replace(' u ', ' you ')
+                question = question.capitalize().replace(' u ', ' you ')
             elif question_type in ['p', 'paranoia']:
                 location = 'data\\questions\\paranoias.json'
                 data = json.load(open(location, 'r'))
                 question_type = 'paranoia'
-                question = question.lower().capitalize().replace(' u ', ' you ')
+                question = question.capitalize().replace(' u ', ' you ')
 
             if category in ['pg', 'pg13', 'r']:
                 # if str(ctx.guild.id) in data:
