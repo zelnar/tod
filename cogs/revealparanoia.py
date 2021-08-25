@@ -10,7 +10,7 @@ from utils.send_embed import send_embed
 
 class RevealParanoia(commands.Cog):
     '''
-    Reveal all the paranoia questions you asked using `<prefix>` paranoia.
+    Reveal all the paranoia questions you asked using `<prefix> paranoia`.
     Usage:
     `<prefix> revealparanoia`
     '''
@@ -23,16 +23,16 @@ class RevealParanoia(commands.Cog):
     async def revealparanoia(self, ctx, *, content=None):
         async with ctx.typing():
             data = json.load(open('data\\active_paranoia_questions.json', 'r'))
-            if str(ctx.author.id) not in data:
+            if str(ctx.channel.id) not in data:
                 await send_embed(ctx, 'No more unseen questions',
-                                 'You haven\'t given anyone any more paranoia questions.')
+                                 'This channel doesn\'t have any more paranoia questions.')
                 return
             embed = discord.Embed(
                 color=get_embed_color(ctx.author.id),
-                description='Shows only the questions with hidden answers you haven\'t seen before.'
+                description='Shows only the questions with hidden answers sent in this channel previously.'
             )
             count = 0
-            for question_data in data[str(ctx.author.id)]:
+            for question_data in data[str(ctx.channel.id)]:
                 try:
                     user = (await self.bot.fetch_user(question_data[0]))
                     user = f'{user.name}#{user.discriminator}'
@@ -41,10 +41,10 @@ class RevealParanoia(commands.Cog):
                 embed.add_field(name=question_data[1],
                                 value=f'{user} responded: **{question_data[2]}** ([Link]({question_data[3]}))')
                 count += 1
-            embed.set_author(name=f'{ctx.author.display_name}\'s asked paranoia questions ({count})',
+            embed.set_author(name=f'#{ctx.channel.name} hidden paranoia questions ({count})',
                              icon_url=ctx.author.avatar_url)
 
-            data.pop(str(ctx.author.id))
+            data.pop(str(ctx.channel.id))
             f = open('data\\active_paranoia_questions.json', 'w')
             f.write(json.dumps(data))
             f.close()
@@ -52,7 +52,8 @@ class RevealParanoia(commands.Cog):
 
     @revealparanoia.error
     async def revealparanoia_error(self, ctx, error):
-        await send_embed(ctx, 'Invalid usage', f'Use `{await get_server_prefix(self.bot, ctx)}revealparanoia`')
+        await send_embed(ctx, 'Invalid usage',
+                         f'Invalid usage. Use `{await get_server_prefix(self.bot, ctx)}revealparanoia`')
 
 
 def setup(bot):

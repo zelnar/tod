@@ -82,7 +82,9 @@ class Paranoia(commands.Cog):
                     msg = await ctx.message.reply(embed=reveal_embed)
 
                     data = json.load(open('data\\active_paranoia_questions.json', 'r'))
-                    data[str(ctx.author.id)].append([str(member.id), question_chosen, response.content, msg.jump_url])
+                    if str(ctx.channel.id) not in data:
+                        data[str(ctx.channel.id)] = []
+                    data[str(ctx.channel.id)].append([str(member.id), question_chosen, response.content, msg.jump_url])
                     json_data = json.dumps(data)
                     f = open('data\\active_paranoia_questions.json', 'w')
                     f.write(json_data)
@@ -90,7 +92,6 @@ class Paranoia(commands.Cog):
 
     @paranoia.error
     async def paranoia_error(self, ctx, error):
-        raise error
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
             await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}paranoia '
                                                    f'<member> <pg | pg13 | r>')
