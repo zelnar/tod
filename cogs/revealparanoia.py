@@ -10,7 +10,8 @@ from utils.send_embed import send_embed
 
 class RevealParanoia(commands.Cog):
     '''
-    Reveal all the paranoia questions you asked using `<prefix> paranoia`.
+    Reveal all the hidden paranoia questions in a channel.
+    Play with `<prefix> paranoia <member> [pg | pg13 | r]`.
     Usage:
     `<prefix> revealparanoia`
     '''
@@ -18,7 +19,7 @@ class RevealParanoia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['showparanoia', 'showp', 'revealp'])
+    @commands.command(aliases=['showparanoia', 'showp', 'revealp', 'pshow', 'preveal'])
     @commands.guild_only()
     async def revealparanoia(self, ctx, *, content=None):
         async with ctx.typing():
@@ -39,7 +40,8 @@ class RevealParanoia(commands.Cog):
                 except:
                     user = '(invalid user)'
                 embed.add_field(name=question_data[1],
-                                value=f'{user} responded: **{question_data[2]}** ([Link]({question_data[3]}))')
+                                value=f'{user} responded: **{question_data[2]}** ([Link]({question_data[3]}))',
+                                inline=False)
                 count += 1
             embed.set_author(name=f'#{ctx.channel.name} hidden paranoia questions ({count})',
                              icon_url=ctx.author.avatar_url)

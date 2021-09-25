@@ -20,8 +20,8 @@ class Add(commands.Cog):
     @commands.command(aliases=['addquestion'])
     @commands.guild_only()
     async def add(self, ctx, question_type, category, *, question):
-        if ctx.author.id != 461345173314732052:
-            return
+        # if ctx.author.id != 461345173314732052:
+        #    return
         if '\n' in question.strip():
             await send_embed(ctx, f'Wrong command?', f'Did you mean to use the bulkadd command?'
                                                      f'\n(`{await get_server_prefix(self.bot, ctx)}bulkadd '

@@ -16,7 +16,7 @@ class Paranoia(commands.Cog):
     To play, I dm a person of your choice a question (most likely to...) and the person responds who they think represents the statement the most.
     Then, a coinflip decides whether the question is revealed or not.
     Usage:
-    `<prefix> paranoia <member> <pg | pg13 | r>` (If category not specified, I choose a pg or pg13 question.)
+    `<prefix> paranoia <member> [pg | pg13 | r]` (If category not specified, I choose a pg or pg13 question.)
     '''
 
     def __init__(self, bot):
@@ -72,7 +72,7 @@ class Paranoia(commands.Cog):
                 await response.add_reaction('<:check:867760636980756500>')
                 reveal_embed = await send_embed(ctx, f'{member.display_name} responded',
                                                 f'{response.content}', send=False, avatar_url=member.avatar_url)
-                if random.randint(1, 100) >= 49:
+                if random.randint(1, 100) >= 70:
                     reveal_embed.add_field(name='Coin landed on heads', value=question_chosen)
                     await dm_msg.edit(embed=embed.set_footer(text='Question revealed :)'))
                     await ctx.message.reply(embed=reveal_embed)

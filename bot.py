@@ -55,6 +55,27 @@ async def on_message(message):
     if f'<@!{bot.user.id}>' in message.content:
         await send_embed(message, 'Hey! I\'m TruthOrDare.', f'Run `{await get_server_prefix(bot, message)}'
                                                             f'help` to see my commands.', bot.user.avatar_url)
+    # if message.author.id == 692045914436796436 or message.author.id == 450041159255851008:
+    #    data = json.load(open('data\\questions\\truths.json', 'r'))
+    #    for nonoword in ['horny', 'hentai', 'porn', 'masturbat', 'sex', 'orgasm', 'penis', 'bra', 'boob', 'vagina',
+    #                     'pussy', 'night stand', 'threesome', 'with benefits', 'nudes', 'rimjob', 'good in bed',
+    #                     'dick', 'kink', 'turn-off', 'turn-on', 'fetish', 'hott', 'dirtiest', 'turned on', 'love',
+    #                     '*adventurous*', 'naught', 'pleasure yourself', 'please yourself', 'kill', 'death', 'dead',
+    #                     'date', 'kiss', 'romantic', 'boyfriend', 'girlfriend', 'flirt', 'inappropriate', 'crush', 'dating']:
+    #        if nonoword in message.content:
+    #            return
+    #
+    #    stuff = message.content
+    #    for emoji in [':eyes:', ':grey_question:', ':question:', ':thinking:']:
+    #        stuff = stuff.replace(emoji, '')
+    #    stuff = stuff.strip()
+    #    data['pg'].append(stuff)
+    #    data['pg'] = sorted(list(set(data['pg'])))
+    #    print(stuff)
+    #    json_data = json.dumps(data)
+    #    f = open('data\\questions\\truths.json', 'w')
+    #    f.write(json_data)
+    #    f.close()
     await bot.process_commands(message)
 
 
