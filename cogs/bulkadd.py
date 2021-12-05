@@ -17,46 +17,48 @@ class Bulkadd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['multiadd', 'addmulti', 'multipleadd', 'addmultiple'])
+    @commands.command(aliases=['multiadd', 'addmulti', 'multipleadd', 'addmultiple', 'ma'])
     @commands.guild_only()
     async def bulkadd(self, ctx, question_type, category, *, questions):
         if ctx.author.id != 461345173314732052:
             return
         question_type = question_type.lower()
         category = category.lower()
-        async with ctx.typing():
-            questions = list(map(lambda x: x.lower().capitalize().replace(' u ', ' you '), questions.split('\n')))
-            if question_type in ['truth', 't', 'truths']:
-                location = 'data\\questions\\truths.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'truth'
-            elif question_type in ['dare', 'd', 'dares']:
-                location = 'data\\questions\\dares.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'dare'
-            elif question_type in ['wyr', 'wouldyourather']:
-                location = 'data\\questions\\wyrs.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'wyr'
-            elif question_type in ['p', 'paranoia']:
-                location = 'data\\questions\\paranoias.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'paranoia'
 
-            if category in ['pg', 'pg13', 'r']:
-                dupes = 0
-                # if str(ctx.guild.id) in data:
-                for question in questions:
-                    if question.strip() in data[category]:
-                        dupes += 1
-                    else:
-                        data[category].append(question.strip().capitalize())
-                data[category] = list(set(data[category]))
-            else:
-                await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}bulkadd '
-                                                          f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <questions>'
-                                                          f'\n(where each question is on a new line)')
-                return
+        questions = list(map(lambda x: x.capitalize().replace(' u ', ' you '), questions.split('\n')))
+        if question_type in ['truth', 't', 'truths']:
+            location = 'data\\questions\\truths.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'truth'
+        elif question_type in ['dare', 'd', 'dares']:
+            location = 'data\\questions\\dares.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'dare'
+        elif question_type in ['wyr', 'wouldyourather']:
+            location = 'data\\questions\\wyrs.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'wyr'
+        elif question_type in ['p', 'paranoia']:
+            location = 'data\\questions\\paranoias.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'paranoia'
+
+        if category in ['pg', 'pg13', 'r']:
+            dupes = 0
+            # if str(ctx.guild.id) in data:
+            for question in questions:
+                if not question:
+                    continue
+                if question.strip() in data[category]:
+                    dupes += 1
+                else:
+                    data[category].append(question.strip().capitalize())
+            data[category] = list(set(data[category]))
+        else:
+            await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}bulkadd '
+                                                      f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <questions>'
+                                                      f'\n(where each question is on a new line)')
+            return
 
         json_data = json.dumps(data)
         f = open(location, 'w')
@@ -69,8 +71,8 @@ class Bulkadd(commands.Cog):
     @bulkadd.error
     async def bulkadd_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
-            await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}bulkadd '
-                                                   f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <questions>'
+            await send_embed(ctx, 'Invalid usage', f'Use `{await get_server_prefix(self.bot, ctx)}bulkadd '
+                                                   f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <questions>`'
                                                    f'\n(where each question is on a new line)')
         else:
             raise error

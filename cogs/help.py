@@ -10,7 +10,7 @@ class Help(commands.Cog):
     '''
     The bot's help command.
     Usage:
-    `<prefix> help`
+    `<prefix> help [command]`
     '''
 
     def __init__(self, bot):
@@ -20,7 +20,7 @@ class Help(commands.Cog):
     # @commands.bot_has_permissions(add_reactions=True,embed_links=True)
     async def help(self, ctx, *, command=None):
         prefix = await get_server_prefix(self.bot, ctx)
-        version = '1.0'
+        version = '1.3'
         if not command:
             questions = await get_number_of_questions(ctx.guild.id)
             custom_questions = questions - await get_number_of_questions()
@@ -28,11 +28,15 @@ class Help(commands.Cog):
                 title='TruthOrDare Command List', color=discord.Color.blue(),
                 description=f'**Prefix: {await get_server_prefix(self.bot, ctx)}**\n'
                             f'Total questions (including {custom_questions} guild-specific custom questions): {questions}\n'
+                            f'**(Truth:** {await get_number_of_questions(ctx.guild.id, "t")} '
+                            f'| **Dare:** {await get_number_of_questions(ctx.guild.id, "d")} '
+                            f'| **Would you rather:** {await get_number_of_questions(ctx.guild.id, "wyr")} '
+                            f'| **Paranoia:** {await get_number_of_questions(ctx.guild.id, "p")}**)**\n'
                             f'Use `{prefix}help <command>` to see specific information about a command.',
                 colour=get_embed_color(ctx.author.id)
             )
             for cog in self.bot.cogs:
-                emb.add_field(name=cog, value=self.bot.cogs[cog].__doc__.split('\n')[1].strip())
+                emb.add_field(name=cog.lower(), value=self.bot.cogs[cog].__doc__.split('\n')[1].strip())
 
             emb.set_footer(text=f'{len(self.bot.cogs)} commands • Bot is running version {version}')
         else:

@@ -25,26 +25,25 @@ class Wyr(commands.Cog):
     @commands.command(aliases=['wouldyourather'])
     @commands.guild_only()
     async def wyr(self, ctx, *, category=None):
-        async with ctx.typing():
-            data = json.load(open('data\\questions\\wyrs.json', 'r'))
-            if not category:
-                default_category = json.load(open('data\\default_category.json', 'r'))
-                if str(ctx.guild.id) in default_category:
-                    category = default_category[str(ctx.guild.id)]
-                else:
-                    category = 'pg'
-            category = category.lower()
-
-            data2 = json.load(open('data\\questions\\serverwyrs.json', 'r'))
-            if str(ctx.guild.id) in data2:
-                questions = data2[str(ctx.guild.id)][category]
+        data = json.load(open('data\\questions\\wyrs.json', 'r'))
+        if not category:
+            default_category = json.load(open('data\\default_category.json', 'r'))
+            if str(ctx.guild.id) in default_category:
+                category = default_category[str(ctx.guild.id)]
             else:
-                questions = []
+                category = 'pg'
+        category = category.lower()
+
+        data2 = json.load(open('data\\questions\\serverwyrs.json', 'r'))
+        if str(ctx.guild.id) in data2:
+            questions = data2[str(ctx.guild.id)][category]
+        else:
+            questions = []
 
         if category == 'add':
             await send_embed(ctx, f'Wrong command?', f'Did you mean to use the add command?'
-                                                     f'\n({await get_server_prefix(self.bot, ctx)}add '
-                                                     f'<truth | dare | wyr> <pg | pg13 | r> <question>)')
+                                                     f'\n(`{await get_server_prefix(self.bot, ctx)}add '
+                                                     f'<truth | dare | wyr> <pg | pg13 | r> <question>`)')
             return
 
         question_chosen = choice(await self.list_extend(questions, data[category]))
@@ -54,8 +53,8 @@ class Wyr(commands.Cog):
 
     @wyr.error
     async def wyr_error(self, ctx, error):
-        await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}wyr '
-                                                  f'[pg | pg13 | r]')
+        await send_embed(ctx, 'Invalid category', f'Use `{await get_server_prefix(self.bot, ctx)}wyr '
+                                                  f'[pg | pg13 | r]`')
 
 
 def setup(bot):

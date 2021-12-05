@@ -29,26 +29,25 @@ class Paranoia(commands.Cog):
     @commands.command(aliases=['p'])
     @commands.guild_only()
     async def paranoia(self, ctx, member: discord.Member, *, category=None):
-        async with ctx.typing():
-            data = json.load(open('data\\questions\\paranoias.json', 'r'))
-            if not category:
-                default_category = json.load(open('data\\default_category.json', 'r'))
-                if str(ctx.guild.id) in default_category:
-                    category = default_category[str(ctx.guild.id)]
-                else:
-                    category = random.choice(['pg', 'pg13'])
-            category = category.lower()
-
-            data2 = json.load(open('data\\questions\\serverparanoias.json', 'r'))
-            if str(ctx.guild.id) in data2:
-                questions = data2[str(ctx.guild.id)][category]
+        data = json.load(open('data\\questions\\paranoias.json', 'r'))
+        if not category:
+            default_category = json.load(open('data\\default_category.json', 'r'))
+            if str(ctx.guild.id) in default_category:
+                category = default_category[str(ctx.guild.id)]
             else:
-                questions = []
+                category = random.choice(['pg', 'pg13'])
+        category = category.lower()
+
+        data2 = json.load(open('data\\questions\\serverparanoias.json', 'r'))
+        if str(ctx.guild.id) in data2:
+            questions = data2[str(ctx.guild.id)][category]
+        else:
+            questions = []
 
         if category == 'add':
             await send_embed(ctx, f'Wrong command?', f'Did you mean to use the add command?'
-                                                     f'\n({await get_server_prefix(self.bot, ctx)}add '
-                                                     f'<truth | dare | wyr> <pg | pg13 | r> <question>)')
+                                                     f'\n(`{await get_server_prefix(self.bot, ctx)}add '
+                                                     f'<truth | dare | wyr> <pg | pg13 | r> <question>`)')
             return
 
         question_chosen = choice(await self.list_extend(questions, data[category]))
@@ -72,7 +71,7 @@ class Paranoia(commands.Cog):
                 await response.add_reaction('<:check:867760636980756500>')
                 reveal_embed = await send_embed(ctx, f'{member.display_name} responded',
                                                 f'{response.content}', send=False, avatar_url=member.avatar_url)
-                if random.randint(1, 100) >= 70:
+                if random.randint(1, 100) >= 60:
                     reveal_embed.add_field(name='Coin landed on heads', value=question_chosen)
                     await dm_msg.edit(embed=embed.set_footer(text='Question revealed :)'))
                     await ctx.message.reply(embed=reveal_embed)
@@ -93,11 +92,11 @@ class Paranoia(commands.Cog):
     @paranoia.error
     async def paranoia_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
-            await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}paranoia '
-                                                   f'<member> <pg | pg13 | r>')
+            await send_embed(ctx, 'Invalid usage', f'Use `{await get_server_prefix(self.bot, ctx)}paranoia '
+                                                   f'<member> <pg | pg13 | r>`')
         else:
-            await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}paranoia '
-                                                   f'<member> <pg | pg13 | r>')
+            await send_embed(ctx, 'Invalid usage', f'Use `{await get_server_prefix(self.bot, ctx)}paranoia '
+                                                   f'<member> <pg | pg13 | r>`')
 
 
 def setup(bot):

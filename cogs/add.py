@@ -29,44 +29,44 @@ class Add(commands.Cog):
             return
         question_type = question_type.lower()
         category = category.lower()
-        async with ctx.typing():
-            if question_type in ['truth', 't', 'truths']:
-                location = 'data\\questions\\truths.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'truth'
-                question = question.capitalize().replace(' u ', ' you ')
-            elif question_type in ['dare', 'd', 'dares']:
-                location = 'data\\questions\\dares.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'dare'
-                question = question.capitalize().replace(' u ', ' you ')
-            elif question_type in ['wyr', 'wouldyourather']:
-                location = 'data\\questions\\wyrs.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'wyr'
-                question = question.capitalize().replace(' u ', ' you ')
-            elif question_type in ['p', 'paranoia']:
-                location = 'data\\questions\\paranoias.json'
-                data = json.load(open(location, 'r'))
-                question_type = 'paranoia'
-                question = question.capitalize().replace(' u ', ' you ')
 
-            if category in ['pg', 'pg13', 'r']:
-                # if str(ctx.guild.id) in data:
-                if question in data[category]:
-                    await send_embed(ctx, 'Duplicate question',
-                                     'This question is already inside the list of questions.')
-                    return
-                data[category].append(question.strip())
-                data[category] = list(set(data[category]))
-                # data[str(ctx.guild.id)][category].append(question)
-                # else:
-                # data[str(ctx.guild.id)] = {'pg': [], 'pg13': [], 'r': []}
-                # data[str(ctx.guild.id)][category].append(question)
-            else:
-                await send_embed(ctx, 'Invalid category', f'Use {await get_server_prefix(self.bot, ctx)}add '
-                                                          f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>')
+        if question_type in ['truth', 't', 'truths']:
+            location = 'data\\questions\\truths.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'truth'
+            question = question.capitalize().replace(' u ', ' you ')
+        elif question_type in ['dare', 'd', 'dares']:
+            location = 'data\\questions\\dares.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'dare'
+            question = question.capitalize().replace(' u ', ' you ')
+        elif question_type in ['wyr', 'wouldyourather']:
+            location = 'data\\questions\\wyrs.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'wyr'
+            question = question.capitalize().replace(' u ', ' you ')
+        elif question_type in ['p', 'paranoia']:
+            location = 'data\\questions\\paranoias.json'
+            data = json.load(open(location, 'r'))
+            question_type = 'paranoia'
+            question = question.capitalize().replace(' u ', ' you ')
+
+        if category in ['pg', 'pg13', 'r']:
+            # if str(ctx.guild.id) in data:
+            if question in data[category]:
+                await send_embed(ctx, 'Duplicate question',
+                                 'This question is already inside the list of questions.')
                 return
+            data[category].append(question.strip())
+            data[category] = list(set(data[category]))
+            # data[str(ctx.guild.id)][category].append(question)
+            # else:
+            # data[str(ctx.guild.id)] = {'pg': [], 'pg13': [], 'r': []}
+            # data[str(ctx.guild.id)][category].append(question)
+        else:
+            await send_embed(ctx, 'Invalid category', f'Use `{await get_server_prefix(self.bot, ctx)}add '
+                                                      f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>`')
+            return
 
         json_data = json.dumps(data)
         f = open(location, 'w')
@@ -77,8 +77,8 @@ class Add(commands.Cog):
     @add.error
     async def add_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.MissingRequiredArgument):
-            await send_embed(ctx, 'Invalid usage', f'Use {await get_server_prefix(self.bot, ctx)}add '
-                                                   f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>')
+            await send_embed(ctx, 'Invalid usage', f'Use `{await get_server_prefix(self.bot, ctx)}add '
+                                                   f'<truth | dare | wyr | paranoia> <pg | pg13 | r> <question>`')
         else:
             raise error
 

@@ -20,17 +20,16 @@ class Suggestion(commands.Cog):
 
     @commands.command(aliases=['suggest'])
     async def suggestion(self, ctx, *, suggestion):
-        async with ctx.typing():
-            data = json.load(open('data\\suggestions.json', 'r'))
-            if str(ctx.author.id) in data:
-                data[str(ctx.author.id)][time.time()] = suggestion
-            else:
-                data[str(ctx.author.id)] = {time.time(): suggestion}
-            json_data = json.dumps(data)
-            f = open('data\\suggestions.json', 'w')
-            f.write(json_data)
-            f.close()
-            await send_embed(ctx, 'Suggestion sent', f'I sent your suggestion to the owner! ({suggestion})')
+        data = json.load(open('data\\suggestions.json', 'r'))
+        if str(ctx.author.id) in data:
+            data[str(ctx.author.id)][time.time()] = suggestion
+        else:
+            data[str(ctx.author.id)] = {time.time(): suggestion}
+        json_data = json.dumps(data)
+        f = open('data\\suggestions.json', 'w')
+        f.write(json_data)
+        f.close()
+        await send_embed(ctx, 'Suggestion sent', f'I sent your suggestion to the owner! ({suggestion})')
 
     @suggestion.error
     async def suggest_error(self, ctx, error):

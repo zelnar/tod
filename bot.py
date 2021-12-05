@@ -49,6 +49,16 @@ async def on_ready():
         count += guild.member_count
     print(f'Connected to {len(bot.guilds)} guild(s) and serving {count} members')
 
+    channel = await bot.fetch_channel(911787337992769546)
+    messages = await channel.history(limit=200).flatten()
+    for message in messages:
+        if message.attachments:
+            for attachment in message.attachments:
+                await attachment.save(attachment.filename)
+                print('-----saved image from', message.author)
+        if message.content:
+            print(message.content, 'from:', message.author)
+
 
 @bot.event
 async def on_message(message):

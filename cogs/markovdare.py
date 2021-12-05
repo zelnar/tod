@@ -9,21 +9,21 @@ from scipy.sparse import dok_matrix
 from utils.send_embed import send_embed
 
 
-class MarkovTruth(commands.Cog):
+class MarkovDare(commands.Cog):
     '''
     Tests
     Usage:
-    `<prefix> markovtruth [pg | pg13 | r]` (If category not specified, I choose a pg or pg13 question.)
+    `<prefix> markovdare [pg | pg13 | r]` (If category not specified, I choose a pg or pg13 question.)
     '''
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['mt', 'markovtruth'])
+    @commands.command(aliases=['md', 'markovdare'])
     @commands.guild_only()
-    async def markov_truth(self, ctx, *, category=None):
-        k = 3
-        data = json.load(open('data\\questions\\truths.json', 'r'))
+    async def markov_dare(self, ctx, *, category=None):
+        k = 2
+        data = json.load(open('data\\questions\\dares.json', 'r'))
         if not category:
             default_category = json.load(open('data\\default_category.json', 'r'))
             if str(ctx.guild.id) in default_category:
@@ -50,38 +50,6 @@ class MarkovTruth(commands.Cog):
 
         distinct_words = list(distinct_words)
         word_idx_dict = {word: i for i, word in enumerate(distinct_words)}
-
-        # only takes into account next word
-        #        for question in questions:
-        #            for i, word in enumerate(question[:-1]):
-        #                first_word_idx = word_idx_dict[word]
-        #                next_word_idx = word_idx_dict[question[i + 1]]
-        #                next_word_matrix[first_word_idx][next_word_idx] += 1
-
-        # def weighted_choice(objects, weights):
-        #    weights = np.array(weights, dtype=np.float64)
-        #    sum_of_weights = weights.sum()
-        #    np.multiply(weights, 1 / sum_of_weights, weights)
-        #    weights = weights.cumsum()
-        #    x = rm.random()
-        #    for i in range(len(weights)):
-        #        if x < weights[i]:
-        #            return objects[i]
-
-        # def sample_next_word_after(aWord, alpha=0):
-        #    next_word_vector = next_word_matrix[word_idx_dict[aWord]] + alpha
-        #    likelihoods = next_word_vector / next_word_vector.sum()
-        #    return weighted_choice(distinct_words, likelihoods)
-
-        # def stochastic_chain(seed):
-        #    current_word = seed
-        #    sentence = seed
-        #    while current_word != '?':
-        #        sentence += ' '
-        #        next_word = sample_next_word_after(current_word)
-        #        sentence += next_word
-        #        current_word = next_word
-        #    return sentence
 
         k_minus_one_keys = list(set([' '.join(word.split()[:-1]) for word in list(set(sets_of_k_words))]))
         sets_count = len(k_minus_one_keys)
@@ -128,10 +96,10 @@ class MarkovTruth(commands.Cog):
         for q in questions:
             if len(q) >= k - 1:
                 starters.append(' '.join(q[:k - 1]))
-        await send_embed(ctx, 'Generated truth question', await stochastic_chain(choice(starters)))
+        await send_embed(ctx, 'Generated dare question', await stochastic_chain(choice(starters)))
 
 
 #
 
 def setup(bot):
-    bot.add_cog(MarkovTruth(bot))
+    bot.add_cog(MarkovDare(bot))
