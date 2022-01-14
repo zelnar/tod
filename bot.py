@@ -8,7 +8,7 @@ from utils.get_server_prefix import get_server_prefix, get_server_prefix_list
 from utils.send_embed import send_embed
 
 intents = discord.Intents.all()
-TOKEN = "ODY5MDQ2NjEwNzA4MDEzMDg5.YP4gug.NOi7IJD7aDYZXXJt6K-CFwKSKfg"
+TOKEN = "token"
 bot = commands.Bot(command_prefix=get_server_prefix_list, case_insensitive=True, intents=intents)
 bot.remove_command('help')
 
